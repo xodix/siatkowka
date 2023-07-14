@@ -13,7 +13,7 @@
 
   let matchBegun = false;
 
-  let client = io("http://localhost:5000");
+  let client = io();
 
   function updateScore() {
     if (matchBegun) {

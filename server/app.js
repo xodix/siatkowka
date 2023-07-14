@@ -4,6 +4,7 @@ const cors = require("cors");
 const http = require('http');
 const { Server } = require("socket.io");
 const path = require("path");
+const process = require("process");
 
 const app = express();
 const server = http.createServer(app);
@@ -16,7 +17,6 @@ const io = new Server(server, {
 app.use(express.json());
 app.use(express.static('public'));
 app.use(cors());
-const PORT = 5000;
 
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "index.html"));
@@ -42,7 +42,7 @@ app.post("/login", (req, res) => {
 
   if (!pass || !isCorrect(pass)) res.sendStatus(400);
   else {
-    let jwt = jsonwebtoken.sign(code, "VErySecret");
+    let jwt = jsonwebtoken.sign(code, process.env.JWT || "CHANGEME!");
     const response = { field: pass.charCodeAt(3) - 64, jwt };
 
     res.statusCode = 200;
@@ -69,6 +69,6 @@ io.on('connection', (socket) => {
   });
 });
 
-server.listen(PORT, () => {
-  console.log(`listening on http://localhost:${PORT}`);
+server.listen(process.env.PORT || 5000, "0.0.0.0", () => {
+  console.log(`listening on http://localhost:${process.env.PORT}`);
 });

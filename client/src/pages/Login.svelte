@@ -9,7 +9,7 @@
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
 
-    let req = await fetch("http://localhost:5000/login", {
+    let req = await fetch("/login", {
       body: JSON.stringify({ password: code }),
       method: "POST",
       headers,

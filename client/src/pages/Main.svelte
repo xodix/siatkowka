@@ -15,10 +15,9 @@
   user.subscribe((val) => (loginData = val));
 
   onMount(() => {
-    let client = io("http://localhost:5000");
+    let client = io();
 
     client.on("score_change", (msg) => {
-      console.log(msg);
       try {
         const fieldData = msg;
         fields = fieldData;
